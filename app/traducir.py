@@ -1,5 +1,14 @@
 import os
 import sys
+
+if os.environ.get("SIGN_DEBUG") != "1":
+    os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
+    os.environ["GLOG_minloglevel"] = "3"
+    _devnull = os.open(os.devnull, os.O_WRONLY)
+    os.dup2(_devnull, 2)
+    sys.stderr = open(os.devnull, "w")
+
+import sys
 import json
 import argparse
 import cv2
