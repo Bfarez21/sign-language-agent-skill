@@ -10,6 +10,7 @@ URL_MODELO_MANO = (
     "https://storage.googleapis.com/mediapipe-models/"
     "hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task"
 )
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RUTA_MODELO_MANO = os.path.join("modelo", "hand_landmarker.task")
 
 # Conexiones entre los 21 puntos de la mano para dibujar el esqueleto
