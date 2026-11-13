@@ -43,7 +43,7 @@ sign-language-agent-skill/
 Requiere Python 3.12.
 
 ```bash
-git clone https://github.com/<TU_USUARIO>/sign-language-agent-skill.git
+git clone https://github.com/Bfarez21/sign-language-agent-skill.git
 cd sign-language-agent-skill
 
 python -m venv .venv
