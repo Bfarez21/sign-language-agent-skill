@@ -4,3 +4,13 @@ __pycache__/
 *.pyc
 .DS_Store
 dataset/*npy
+
+prueba.jpg
+prueba.png
+IMG_*.*
+*.jpg
+*.jpeg
+*.png
+*.webp
+!docs/*.png
+!assets/*.png

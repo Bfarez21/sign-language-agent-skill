@@ -11,30 +11,14 @@ Herramienta CLI ligera que detecta 21 puntos clave 3D de la mano (MediaPipe `Han
 
 - **Clases soportadas:** letras **`A`** a la **`O`** (15 clases).
 - **Entrada:** imagen estática (`.jpg`, `.jpeg`, `.png`, `.webp`) con una mano visible y buena iluminación.
-- **Entorno:** Python 3.12 con las dependencias instaladas en un entorno virtual (`.venv`).
-
-### Instalación rápida (si aún no está configurado el entorno)
-
-Desde la carpeta raíz donde está instalada esta skill:
-
-```bash
-python -m venv .venv
-
-# Windows:
-.venv\Scripts\pip install -r requirements.txt
-
-# Linux / macOS:
-.venv/bin/pip install -r requirements.txt
-```
+- **Entorno:** Python 3.12 (el lanzador `run.py` detecta o crea automáticamente el entorno virtual `.venv` e instala `requirements.txt` si hace falta).
 
 ## Ejecución (para el agente)
 
-Ejecuta `app/traducir.py` en un único comando directo, usando el intérprete del entorno virtual (`.venv`) ubicado en la raíz de esta skill. No busques intérpretes globales ni inspecciones otros archivos `.py` antes de ejecutar.
+Ejecuta `run.py` en un **único comando directo** pasando la ruta de la imagen con `--imagen`. No busques intérpretes manualmente ni inspecciones otros archivos `.py` antes de ejecutar:
 
-**Windows:**
-
-```bat
-.venv\Scripts\python.exe app/traducir.py --imagen "<RUTA_DE_LA_IMAGEN>"
+```bash
+python run.py --imagen "<RUTA_DE_LA_IMAGEN>"
 ```
 
 **Linux / macOS:**
