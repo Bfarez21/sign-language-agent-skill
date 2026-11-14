@@ -2,65 +2,64 @@
 name: sign-language-translator
 description: Traduce imágenes de lengua de señas (alfabeto dactilológico, letras A-O) a texto estructurado en formato JSON usando visión por computadora. Activar siempre que el usuario envíe una imagen con una mano haciendo una seña o pida interpretar lengua de señas.
 ---
-# Sign Language Translator Skill (V1)
 
-Traduce imágenes de lengua de señas (alfabeto dactilológico, letras A-O) a texto estructurado en formato JSON utilizando visión por computadora (MediaPipe HandLandmarker) y TensorFlow Lite.
+# Sign Language Translator (V1)
 
-Herramienta CLI ligera para detectar articulaciones de la mano (21 puntos clave 3D) y clasificar señas del alfabeto dactilológico desde archivos de imagen, devolviendo una salida JSON limpia lista para ser consumida por agentes de IA.
+Herramienta CLI ligera que detecta 21 puntos clave 3D de la mano (MediaPipe `HandLandmarker`) y clasifica señas del alfabeto dactilológico (letras **A–O**) mediante TensorFlow Lite, devolviendo una salida JSON limpia lista para ser consumida por agentes de IA.
 
-> **Cuándo activar esta skill:** siempre que el usuario envíe una imagen con una mano haciendo una seña o pida interpretar lengua de señas.
+## Alcance y requisitos
 
-## Alcance del modelo actual (V1)
-
-- **Clases soportadas:** letras de la **`A`** a la **`O`** (15 clases).
+- **Clases soportadas:** letras **`A`** a la **`O`** (15 clases).
 - **Entrada:** imagen estática (`.jpg`, `.jpeg`, `.png`, `.webp`) con una mano visible y buena iluminación.
-- **Motor:** MediaPipe Tasks (`HandLandmarker`) + TensorFlow Lite (`model.tflite`).
+- **Entorno:** Python 3.12 con las dependencias instaladas en un entorno virtual (`.venv`).
 
-## Instalación de dependencias
+### Instalación rápida (si aún no está configurado el entorno)
 
-Si el entorno aún no tiene las dependencias instaladas (requiere Python 3.12):
-
-```bash
-pip install -r requirements.txt
-```
-
-## Uso
-
-Ejecuta el traductor pasando la ruta absoluta o relativa de la imagen mediante `--imagen`. Asegúrate de invocar el script apuntando a la ubicación de esta skill:
+Desde la carpeta raíz donde está instalada esta skill:
 
 ```bash
-python app/traducir.py --imagen "<RUTA_DE_LA_IMAGEN>"
+python -m venv .venv
+
+# Windows:
+.venv\Scripts\pip install -r requirements.txt
+
+# Linux / macOS:
+.venv/bin/pip install -r requirements.txt
 ```
 
-> **Nota:** si ejecutas el comando desde fuera de la raíz de esta skill, antepón la ruta base donde está instalada la skill antes de `app/traducir.py`.
+## Ejecución (para el agente)
+
+Ejecuta `app/traducir.py` en un único comando directo, usando el intérprete del entorno virtual (`.venv`) ubicado en la raíz de esta skill. No busques intérpretes globales ni inspecciones otros archivos `.py` antes de ejecutar.
+
+**Windows:**
+
+```bat
+.venv\Scripts\python.exe app/traducir.py --imagen "<RUTA_DE_LA_IMAGEN>"
+```
+
+**Linux / macOS:**
+
+```bash
+.venv/bin/python app/traducir.py --imagen "<RUTA_DE_LA_IMAGEN>"
+```
+
+> **Nota de ruta:** si el agente se encuentra en otro directorio de trabajo, antepón la ruta base de esta skill tanto al ejecutable de `.venv` como a `app/traducir.py`. Si no existe `.venv` local, usa el entorno virtual configurado en el sistema (por ejemplo `C:\venvs\sign-lang\Scripts\python.exe`).
 
 ## Contrato de salida (JSON)
 
-El script imprime una única línea JSON en `stdout`.
+El script devuelve una única línea JSON en `stdout`:
 
-**Detección exitosa:**
+| Estado | Ejemplo de salida |
+| --- | --- |
+| Detección exitosa | `{"ok": true, "mano_detectada": true, "prediccion": "B", "confianza": 0.9845, "orientacion": "original"}` |
+| Sin mano visible | `{"ok": true, "mano_detectada": false, "prediccion": null, "confianza": 0.0}` |
+| Error de lectura | `{"ok": false, "error": "No se pudo leer la imagen: ruta.jpg"}` |
 
-```json
-{"ok": true, "mano_detectada": true, "prediccion": "B", "confianza": 0.9845}
-```
-
-**Sin mano visible en la imagen:**
-
-```json
-{"ok": true, "mano_detectada": false, "prediccion": null, "confianza": 0.0}
-```
-
-**Error de lectura o ruta inválida:**
-
-```json
-{"ok": false, "error": "No se pudo leer la imagen: ruta.jpg"}
-```
-
-## Directrices de respuesta para el agente
+## Reglas de respuesta para el agente
 
 1. **Umbral de confianza (`0.75`):**
-   - Si `confianza >= 0.75`, entrega la letra traducida (`prediccion`) de forma directa y clara.
-   - Si `confianza < 0.75`, reporta la letra más probable pero advierte al usuario que la inclinación de la muñeca o la iluminación reducen la certeza, sugiriendo una toma frontal más clara.
-2. **Sin mano detectada:** si `mano_detectada` es `false`, indica que no se logró identificar una mano en la imagen y pide que la mano esté bien encuadrada y enfocada.
-3. **Encadenamiento multimodal (voz):** si el usuario solicita escuchar la traducción en audio, toma el valor de `prediccion` y pásalo a cualquier herramienta Text-to-Speech (TTS) disponible en tu entorno.
-4. **Integridad del modelo:** no ejecutes `app/entrenar.py` ni modifiques los archivos en `modelo/` o `dataset/` a menos que el usuario solicite explícitamente reentrenar o añadir nuevas señas.
+   - Si `confianza >= 0.75`: responde de forma directa y concisa con la letra detectada (`prediccion`).
+   - Si `confianza < 0.75`: indica la letra más probable, pero advierte que la iluminación o el ángulo reducen la certeza y sugiere una foto frontal más clara.
+2. **Sin mano detectada (`mano_detectada: false`):** informa que no se detectó ninguna mano y pide una imagen bien enfocada y encuadrada.
+3. **Salida en audio (TTS):** si el usuario pide escuchar la traducción, envía el valor de `prediccion` a la herramienta Text-to-Speech disponible en el entorno.
+4. **Protección del modelo:** nunca ejecutes `app/entrenar.py` ni alteres `modelo/` o `dataset/` salvo petición explícita del usuario.

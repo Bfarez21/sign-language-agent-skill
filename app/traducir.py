@@ -94,16 +94,23 @@ def procesar_imagen(ruta_imagen, traductor, detector):
     if frame is None:
         return {"ok": False, "error": f"No se pudo leer la imagen: {ruta_imagen}"}
 
-    vector, _ = detector.procesar_frame(frame, dibujar=False)
-    if vector is None:
+    candidatos = []
+    for modo, img in [("original", frame), ("espejo", cv2.flip(frame, 1))]:
+        vector, _ = detector.procesar_frame(img, dibujar=False)
+        if vector is not None:
+            letra, confianza = traductor.predecir(vector)
+            candidatos.append((confianza, letra, modo))
+
+    if not candidatos:
         return {"ok": True, "mano_detectada": False, "prediccion": None, "confianza": 0.0}
 
-    letra, confianza = traductor.predecir(vector)
+    mejor_confianza, mejor_letra, mejor_modo = max(candidatos, key=lambda x: x[0])
     return {
         "ok": True,
         "mano_detectada": True,
-        "prediccion": letra,
-        "confianza": round(confianza, 4)
+        "prediccion": mejor_letra,
+        "confianza": round(mejor_confianza, 4),
+        "orientacion": mejor_modo
     }
 
 
