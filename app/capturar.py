@@ -4,7 +4,7 @@ import numpy as np
 from manos import DetectorManos
 
 CARPETA_DATASET = "dataset"
-MUESTRAS_POR_LETRA = 150
+MUESTRAS_POR_LETRA = 1000
 
 
 def main():

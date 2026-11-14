@@ -80,7 +80,6 @@ Para ver la detección en vivo con tu cámara:
 python app/traducir.py --camara
 ```
 
-- Presiona **`S`** para guardar una foto como `prueba.jpg`.
 - Presiona **`Q`** para salir.
 
 > Este modo requiere que ya se hayan instalado las dependencias (basta con haber hecho el Paso 2 al menos una vez).
@@ -273,3 +272,9 @@ En lugar de analizar la foto completa, el programa:
 1. **Detecta la mano** y ubica sus 21 puntos (articulaciones y puntas de los dedos) con MediaPipe.
 2. **Ajusta los puntos** para que no importe qué tan cerca o lejos esté la mano de la cámara.
 3. **Clasifica la seña** con un modelo pequeño de TensorFlow Lite, en milisegundos y sin necesitar tarjeta gráfica.
+
+## Señas soportadas (Alfabeto ASL estático)
+
+El modelo reconoce las **24 letras estáticas** del alfabeto dactilológico americano (**A–Y**, excluyendo **J** y **Z** por requerir movimiento):
+
+![Guía de señas ASL soportadas](assets/alfabeto_asl.png)
