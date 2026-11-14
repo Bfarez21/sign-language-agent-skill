@@ -1,6 +1,6 @@
 # Sign Language Agent Skill (V1)
 
-Programa que **reconoce letras de la lengua de señas** (alfabeto con las manos, de la **A a la O**) a partir de una foto o de la cámara web.
+Programa que **reconoce letras de la lengua de señas** (alfabeto con las manos) a partir de una foto o de la cámara web.
 
 Le das una imagen de una mano haciendo una seña y te responde con la letra que cree que es y qué tan seguro está.
 
