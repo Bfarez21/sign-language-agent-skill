@@ -1,15 +1,15 @@
 ---
 name: sign-language-translator
-description: Traduce imágenes de lengua de señas (alfabeto dactilológico, letras A-O) a texto estructurado en formato JSON usando visión por computadora. Activar siempre que el usuario envíe una imagen con una mano haciendo una seña o pida interpretar lengua de señas.
+description: Traduce imágenes de lengua de señas (alfabeto dactilológico, 24 letras) a texto estructurado en formato JSON usando visión por computadora. Activar siempre que el usuario envíe una imagen con una mano haciendo una seña o pida interpretar lengua de señas.
 ---
 
 # Sign Language Translator (V1)
 
-Herramienta CLI ligera que detecta 21 puntos clave 3D de la mano (MediaPipe `HandLandmarker`) y clasifica señas del alfabeto dactilológico (letras **A–O**) mediante TensorFlow Lite, devolviendo una salida JSON limpia lista para ser consumida por agentes de IA.
+Herramienta CLI ligera que detecta 21 puntos clave 3D de la mano (MediaPipe `HandLandmarker`) y clasifica señas del alfabeto dactilológico (24 letras) mediante TensorFlow Lite, devolviendo una salida JSON limpia lista para ser consumida por agentes de IA.
 
 ## Alcance y requisitos
 
-- **Clases soportadas:** letras **`A`** a la **`O`** (15 clases).
+- **Clases soportadas:** A–Y, excluyendo J y Z por requerir movimiento .
 - **Entrada:** imagen estática (`.jpg`, `.jpeg`, `.png`, `.webp`) con una mano visible y buena iluminación.
 - **Entorno:** Python 3.12 (el lanzador `run.py` detecta o crea automáticamente el entorno virtual `.venv` e instala `requirements.txt` si hace falta).
 

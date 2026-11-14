@@ -136,7 +136,7 @@ Casi siempre es por poca luz, una foto borrosa o una mano cortada. Prueba con un
 La seña puede estar inclinada o la foto poco nítida. Toma otra más frontal.
 
 **¿Reconoce todas las letras?**
-Por ahora solo de la **A a la O** (15 letras). Las demás se pueden agregar; mira la sección [Desarrollo](#desarrollo).
+Las letras que reconoce son las que se encuentra en la imagen adjunta en este repositorio (24 letras). .
 
 **¿Reconoce palabras o frases?**
 No, solo letras individuales a partir de una imagen.
@@ -182,6 +182,7 @@ git clone https://github.com/Bfarez21/sign-language-agent-skill.git ~/.gemini/sk
 
 > Las instrucciones que sigue el agente están en [`SKILL.md`](SKILL.md).
 
+![Guía de señas ASL soportadas](assets/ejemplo_cli.png)
 ---
 
 ## Desarrollo
@@ -257,7 +258,7 @@ sign-language-agent-skill/
 │   ├── capturar.py          # Graba muestras de nuevas señas
 │   └── entrenar.py          # Entrena el modelo
 ├── modelo/
-│   ├── model.tflite         # Modelo entrenado (letras A–O)
+│   ├── model.tflite         # Modelo entrenado (24 letras)
 │   ├── labels.txt           # Lista de letras que conoce
 │   └── hand_landmarker.task # Modelo base de detección de manos
 └── dataset/                 # Muestras de entrenamiento (no se sube a Git)
