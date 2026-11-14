@@ -1,6 +1,6 @@
 ---
 name: sign-language-translator
-description: Traduce imágenes de lengua de señas (alfabeto dactilológico, 24 letras) a texto estructurado en formato JSON usando visión por computadora. Activar siempre que el usuario envíe una imagen con una mano haciendo una seña o pida interpretar lengua de señas.
+description: Traduce imágenes de lengua de señas (ASL / American Sign Language, letras A-Y) a texto estructurado en formato JSON usando visión por computadora. Activar siempre que el usuario envíe una imagen con una mano haciendo una seña o pida interpretar lengua de señas.
 ---
 
 # Sign Language Translator (V1)

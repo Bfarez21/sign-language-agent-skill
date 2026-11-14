@@ -9,6 +9,7 @@ Funciona de dos formas:
 - **Por tu cuenta:** desde tu computadora, sin necesidad de internet ni de una tarjeta gráfica.
 - **Con un agente de IA:** como una "skill" que asistentes como Antigravity CLI, Gemini CLI o Claude Code pueden usar.
 
+> **English Summary:** Zero-config local Computer Vision Agent Skill that translates static **American Sign Language (ASL, A–Y)** hand images into structured JSON (with optional **ElevenLabs / MiniMax** voice chaining). Run `python run.py --imagen <path>` — full documentation below in Spanish.
 ---
 
 ## Contenido
